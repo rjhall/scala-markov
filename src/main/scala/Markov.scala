@@ -79,7 +79,7 @@ class MarkovChain[C](val start: C,
     new MarkovChain(start, stop, edges.insert((List(start, start) ::: w) :+ stop))
   }
 
-  def generate(maxLength: Int): Option[List[C]] = {
+  def generate(maxLength: Int): List[C] = {
     def inner(count: Int, acc: List[C], previous: (C,C)): List[C] = {
       if (count > 0) {
         edges.next(previous) match {
@@ -94,6 +94,6 @@ class MarkovChain[C](val start: C,
         acc
       }
     }
-    Some(inner(maxLength, List[C](), (start, start)))
+    inner(maxLength, List[C](), (start, start))
   }
 }
